@@ -1,10 +1,14 @@
 # Le Sound Normalizer
 
-![Development dashboard with synthetic signals](images/dashboard-preview.png)
+## Why I built it
 
-This version 5.5.0 preview uses synthetic signals, not a live playback measurement.
+I was frustrated by having to turn up quiet movie dialogue, only for the next action scene or explosion to suddenly blast at a much higher volume. I built Le Sound Normalizer to keep dialogue understandable while bringing those loud scenes under control.
 
-Normalizes loud scenes for more comfortable listening. Set an output ceiling, then adjust compression sensitivity to reduce the difference between quiet dialogue and loud effects.
+![Fixed panel sizes — isolated preview](assets/panels-5.8.0.png)
+
+This preview uses isolated test data; no user audio was recorded.
+
+Normalizes loud scenes for more comfortable viewing. Set an output ceiling, then adjust compression sensitivity to reduce the difference between quiet dialogue and loud effects.
 
 - **Soft 23%**, **Balanced 42%**, **NMS 66%** compression starting points, plus an adjustable sensitivity slider.
 - **Output level** sets the digital peak ceiling. **Volume** controls everyday listening volume.
@@ -107,3 +111,8 @@ Preamp gain is visible in diagnostics and above 100% in the status line. At 125%
 The engine and live audio details now share one bottom row. The top DSP line is removed. Adjusting EQ keeps runtime text steady instead of briefly showing settings-sent messages; important errors remain visible and parameter details are still recorded in Logs.
 
 ![Consolidated footer — isolated preview](assets/footer-5.7.5.png)
+
+
+## New in 5.8.0
+
+Collapsing a panel leaves free space and keeps the other panels at their existing sizes. A short, thicker line at the bottom of each expanded panel lets you adjust its height. Heights are remembered, with separate simple/graphic EQ sizes. Dragging stops at the available space; no scrollbars or panels outside the window. Double-click a grip or press Home to reset that panel.
