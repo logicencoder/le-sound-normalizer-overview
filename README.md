@@ -4,7 +4,7 @@
 
 I was frustrated by having to turn up quiet movie dialogue, only for the next action scene or explosion to suddenly blast at a much higher volume. I built Le Sound Normalizer to keep dialogue understandable while bringing those loud scenes under control.
 
-![Compact LED meters and proportional panels — isolated preview](assets/panels-5.8.2.png)
+![Compact LED meters and proportional panels — isolated preview](assets/panels-5.8.3.png)
 
 This preview uses isolated test data; no user audio was recorded.
 
@@ -119,3 +119,6 @@ Collapsing a panel leaves free space and keeps the other panels at their existin
 
 
 Version 5.8.2 redistributes panel heights to fill the window after resizing and collapsing. Compact meters retain LED bars and scales. Height handles can be selected in Settings, with spectrum, waveform and EQ enabled by default. Display-only waveform centering and fixed-channel mode reduce DC/channel-switch drift. Spectrum labels remain present on two rows. This supersedes 5.8.0's blank-space/no-room layout policy. Automatic EQ, automatic compression tuning and extended gain controls are not included in this update.
+
+
+Version 5.8.3 removes hover popups, keeps integer spectrum captions in one row and enlarges the output readout. Output level accepts -60 through +12 dBFS in both engines, with a zero marker. Positive values describe internal floating-point headroom and can overload downstream output; raising a ceiling does not automatically amplify quiet input. Settings and existing listening levels are preserved. Graph layout and waveform buffers are reused to reduce repeated drawing work. Automatic EQ and automatic sensitivity remain under development.
