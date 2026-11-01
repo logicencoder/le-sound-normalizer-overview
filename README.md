@@ -4,7 +4,7 @@
 
 I was frustrated by having to turn up quiet movie dialogue, only for the next action scene or explosion to suddenly blast at a much higher volume. I built Le Sound Normalizer to keep dialogue understandable while bringing those loud scenes under control.
 
-![Fixed panel sizes — isolated preview](assets/panels-5.8.0.png)
+![Compact LED meters and proportional panels — isolated preview](assets/panels-5.8.2.png)
 
 This preview uses isolated test data; no user audio was recorded.
 
@@ -116,3 +116,6 @@ The engine and live audio details now share one bottom row. The top DSP line is 
 ## New in 5.8.0
 
 Collapsing a panel leaves free space and keeps the other panels at their existing sizes. A short, thicker line at the bottom of each expanded panel lets you adjust its height. Heights are remembered, with separate simple/graphic EQ sizes. Dragging stops at the available space; no scrollbars or panels outside the window. Double-click a grip or press Home to reset that panel.
+
+
+Version 5.8.2 redistributes panel heights to fill the window after resizing and collapsing. Compact meters retain LED bars and scales. Height handles can be selected in Settings, with spectrum, waveform and EQ enabled by default. Display-only waveform centering and fixed-channel mode reduce DC/channel-switch drift. Spectrum labels remain present on two rows. This supersedes 5.8.0's blank-space/no-room layout policy. Automatic EQ, automatic compression tuning and extended gain controls are not included in this update.
