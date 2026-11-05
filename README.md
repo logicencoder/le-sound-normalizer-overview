@@ -1,124 +1,94 @@
 # Le Sound Normalizer
 
-## Why I built it
+![Le Sound Normalizer dashboard with LED meters, tuning row, spectrum, waveform and equalizer](assets/panels-5.8.3.png)
 
-I was frustrated by having to turn up quiet movie dialogue, only for the next action scene or explosion to suddenly blast at a much higher volume. I built Le Sound Normalizer to keep dialogue understandable while bringing those loud scenes under control.
+Le Sound Normalizer is a Windows audio tool that keeps loud scenes from overpowering quiet dialogue. Turn the volume up so speech is understandable and the next explosion would normally blast out; the normalizer holds the output under a ceiling you choose and evens out the gap between quiet and loud passages, so a film, a series or a game stays comfortable at one listening level. It runs as a small controller window next to a native audio component that sits in the Windows audio path, so it works with the player you already use. Built and maintained by Logic Encoder at [logicencoder.com](https://logicencoder.com).
 
-![Compact LED meters and proportional panels — isolated preview](assets/panels-5.8.3.png)
+## Tech stack
 
-This preview uses isolated test data; no user audio was recorded.
+| Layer | Technologies |
+|---|---|
+| Controller | C#, Windows Forms, .NET Framework 4.8, x64 |
+| Audio component | C++ Windows audio processing object (APO) loaded by the Windows shared-mode audio engine |
+| Compatibility engine | WASAPI capture and playback with NAudio (MIT licence) and an existing VB-CABLE installation |
+| DSP | 32-bit floating-point processing for 1, 2, 6 and 8 channels, sample-peak limiter, compression, tone and graphic equalizer |
+| Controller to component link | Shared settings block with revision and sequence ownership, bounded telemetry ring |
+| Packaging | Single setup executable with controller, audio component and runtime files |
+| Verification | Native processing scenario suite, controller and UI checks, installer checks |
 
-Normalizes loud scenes for more comfortable viewing. Set an output ceiling, then adjust compression sensitivity to reduce the difference between quiet dialogue and loud effects.
+## How loud scenes are tamed
 
-- **Soft 23%**, **Balanced 42%**, **NMS 66%** compression starting points, plus an adjustable sensitivity slider.
-- **Output level** sets the digital peak ceiling. **Volume** controls everyday listening volume.
-- Bass, middle and treble controls, left/right balance, green digital meters and a collapsible frequency spectrum.
-- Save and load your own sound presets. Settings remember your preferences and window layout.
-- A speaker button mutes or unmutes the selected Windows output only when clicked.
-- Recording-input meters and explicit Enable/Disable listening actions, applied on Save.
-- Short Help, purpose-focused About and local application/native/crash diagnostics.
+The main window is built around one idea: set a ceiling, then choose how firmly loud material is pulled toward quiet material.
 
-## Audio paths
+- **Output level** is the digital peak ceiling, from -60 to +12 dBFS in both engines, with a marker at 0. The limiter at the end of the chain keeps samples below it. Positive values describe internal floating-point headroom and can overshoot a later stage, so the useful range for everyday listening is below zero.
+- **Compression sensitivity** decides how strongly dynamics are reduced. Three starting points are offered: Soft at 23%, Balanced at 42% and NMS at 66%. A slider adjusts the sensitivity from there, and a readout beside it shows the compression percentage, the ratio and the current gain reduction in decibels.
+- **Volume** is everyday listening volume. Above 100% it becomes a small preamp boost (up to 125%, about 1.9 dB) applied before the compressor and limiter, so a quiet signal can be lifted without raising the ceiling. A tick marks exactly 100% where the preamp range begins.
+- **Normalize ON/OFF** switches normalization on and off, so the unprocessed sound is one click away for comparison.
 
-System DSP uses the application's own Windows audio component. It does not require Equalizer APO, Peace or a virtual cable. Setup requires administrator approval once; normal controller use does not. Compatibility is an optional alternative using WASAPI and an existing VB-CABLE installation.
+The two tuning controls, Output level and Compression sensitivity, sit directly under the LED meters by default and can be placed side by side or swapped left and right in the layout settings.
 
-Native processing supports mono, stereo, 5.1 and 7.1 PCM. The player must decode compressed audio to PCM. Encoded HDMI/S/PDIF passthrough and paths bypassing Windows audio effects cannot be assumed to receive the ceiling. Digital dBFS readings are not physical sound-pressure measurements. Spectrum bars show individual frequency components; LED meters show the full-signal peak, so their values differ.
+## Meters, spectrum and waveform
 
-## Availability and verification
+The top of the window is a compact pair of green LED meters with scales and a connection status per output. When an output is muted, the meter keeps showing MUTED and its readings fall to the floor, so silence is never mistaken for a lost connection. Yellow and red warning levels keep their meaning in every colour palette.
 
-This is a development build with automated DSP/controller/package checks and limited host verification, not certification across all Windows systems or playback modes. The clean shareable distribution is one setup EXE with the controller, audio component, runtime libraries and license embedded inside. No adjacent DLLs, icons or development files are needed. A new PC needs setup once to register the system audio component. No public binary download is published in this repository.
+Below the meters, three collapsible displays describe what the processor is doing:
 
-The controller is built with C# and Windows Forms; its audio component is C++. Technical source and detailed versioned verification are maintained in the private repository.
+- A **frequency spectrum** with integer captions in one row and labels large enough to read at a glance.
+- An **oscilloscope-style waveform strip**, a compact filled live waveform in the application's colours. A **Wave intensity** slider above it scales the display from 30% to 3000% without changing audio volume; the percentage is shown and saved, and a double-click or the Home key returns it to 100%.
+- The **equalizer** (described below), with its own header switch.
 
-[Private source](https://github.com/logicencoder/le-sound-normalizer) · [Logic Encoder](https://logicencoder.com)
+Collapsing a panel leaves free space and keeps the other panels at their sizes. A short, thicker line at the bottom of each expanded panel adjusts its height; heights are remembered separately for the simple and graphic equalizer. When the window is resized, extra height is distributed to the expanded visual panels so the dashboard fills the window.
 
-Version 5.4.13 fixes meter connection status while muted: connected outputs retain MUTED even when audio blocks stop arriving, while readings clear to the floor.
+![Panels with collapsible spectrum, waveform and equalizer](assets/panels-5.8.2.png)
 
-Version 5.4.14 improves action contrast, enlarges Normalize, unifies application/installer/window icons and delivers the shareable package as a single setup EXE. Existing audio settings are preserved.
+## Tone and equalizer
 
-## New in 5.5.0
+Two equalizer views live in Settings under Audio and keep their own values:
 
-Choose a simple tone panel or a ten-band vertical EQ in Settings > Audio: 31, 63, 125, 250, 500 Hz, 1, 2, 4, 8 and 16 kHz. Each band supports +/-18 dB, and the two views keep their values. A collapsible oscilloscope below the spectrum displays the actual waveform using the same capture source.
+- A **simple tone panel** with bass, middle and treble, each plus or minus 18 dB, and left/right balance. Balance snaps to the centre and leaves the centre and LFE channels unchanged.
+- A **graphic equalizer** with up to fifteen vertical bands, each plus or minus 18 dB; switching views preserves the original frequency gains. Track thickness is adjustable from 4 to 16 px.
 
-The Volume control supports a small preamp boost up to 125% before the limiter while Normalize is ON. L/R balance now sits beside it on the left and snaps to the center. Rounded Normalize ON/OFF controls, silent Help, clear Saved feedback, a single engine chooser, classic option checkboxes and a populated Diagnostics page improve everyday use.
+A small **EQ ON/OFF** switch in the equalizer header bypasses equalization only. Normalization and the output ceiling stay active, saved band values are kept, and the switch state is stored in preferences and in sound presets.
 
-Version 5.5.0 passed 326 native processing scenarios plus controller, UI and standalone installer checks. It was also activated on the existing host: the exact native module was confirmed loaded by Windows Audio and a zero-only playback probe confirmed fresh processing telemetry. The installer contains all application payloads in one file.
+## Presets and preferences
 
-## New in 5.5.1
+Save and load your own sound presets; the EQ switch state travels with them. Preferences remember the window layout, panel order, panel heights, disclosure state, text size and colour palette, so the window opens the way it was left.
 
-The oscilloscope now uses a compact filled live waveform strip inspired by LE Karaoke Studio AFX, with the application's green theme. Adjust its display sensitivity from 30% to 300% in Settings > Spectrum; audio volume is unaffected. The full current sample window replaces the former triggered, gridded view. The panel retains its collapse arrow and shares capture with the spectrum.
+## Appearance and layout
 
-![Synthetic waveform strip preview](assets/waveform-strip.png)
+- **Colour palette:** Green or Cyan. Controls, displays, spectrum, waveform and the application icons follow the choice, and System, Light or Dark appearance is chosen independently.
+- **Layout:** Settings lets you reorder the meter row, tuning row, spectrum, oscilloscope and equalizer, choose which sections start expanded, swap the tuning sides and show optional compression readouts. The dashboard uses the full window width.
+- **Text size:** spectrum labels, equalizer labels and supporting text scale independently, with larger frequency labels and gain values as the default and room reserved so nothing overlaps.
 
-## New in 5.6.0
+![Layout settings with panel order and expansion options](assets/layout-5.7.3.png)
 
-Output level and compression now sit side by side. Reverse their order in Settings > Application > Compression on the left. EQ has a separate full-width row and expands to fifteen bands while preserving the original frequency gains. The waveform uses the supplied AFX-style cyan filled trace on a near-black background with an inspection cursor; it does not seek playback. Existing tone controls and display sensitivity remain available.
+## Recording inputs and listening
 
-The exact native module passed 417 isolated APO scenarios and was confirmed loaded on the existing host. A silent zero-only stream confirmed fresh fifteen-band processing telemetry after the approved Windows Audio reload. Saved audio values and mute restrictions were preserved. This update does not claim new clean-machine or protected-media certification.
+A dedicated area lists the Windows recording inputs with live level meters. Listening to an input is explicit: choose Enable or Disable for each input, then Save; changes apply on save and the status line shows whether it was saved or applied. The speaker button mutes or unmutes the selected Windows output only when clicked, and the mute and reduced-volume protections of the application are preserved across settings changes.
 
-![Synthetic fifteen-band dashboard preview](assets/dashboard-5.6.png)
+![Recording inputs with live levels and listening controls](images/usb-input-settings-preview.png)
 
-## New in 5.6.1
+## Audio engines
 
-Adjust Wave intensity directly with the slider above the waveform: 30–3000%, without changing audio volume. Its percentage is visible and saved automatically. Double-click the track or press Home to return to 100%. The same value is available in Settings > Spectrum. This was verified on the installed application during real playback, including the larger live waveform and persisted intensity; the native audio module is unchanged.
+- **System DSP (default).** The application's own audio component runs inside the Windows shared-mode audio engine. It needs no Equalizer APO, Peace or virtual cable. Setup asks for administrator approval once; everyday use of the controller does not. The installer records existing endpoint effects and keeps their order ahead of the final limiter, and it never changes Windows audio protection or test-signing policy.
+- **Compatibility engine (optional).** A WASAPI capture and playback path that uses an existing VB-CABLE installation, with automatic fallback when its prerequisites are present. The cable is needed only for this route.
 
-## New in 5.6.2
+The processor handles mono, stereo, 5.1 and 7.1 floating-point PCM without downmixing. A **Restart audio** button in Settings under Audio restarts Windows Audio only after an administrator confirmation, refuses to run while dependent services are active and keeps the mute and reduced-volume restrictions.
 
-A small EQ ON/OFF switch in the EQ header bypasses only equalization. Normalization and its output limit remain active. Saved frequency values are retained and restored when EQ is enabled again; the switch state is also saved in preferences and sound presets. Both simple and fifteen-band EQ support it. Live installed verification confirmed OFF without disabling Normalize and ON restoring the original values.
+## Diagnostics and help
 
-## New in 5.7.0
+The bottom row combines the engine choice with live audio details, and preamp gain above 100% appears in the status line and in diagnostics. A short Help window explains the purpose and controls, About describes the purpose, and local application, native-component and crash diagnostics are recorded in Logs. Adjusting the equalizer keeps the runtime text steady instead of flashing settings messages; important errors stay visible.
 
-Choose Green or Cyan in Settings > Application > Color palette. Controls, displays, spectrum, waveform and runtime icons follow the selection; System/Light/Dark remains independent. Green now includes a green waveform. Yellow/red warning levels retain their meaning.
+## Playback it covers
 
-Settings > Audio includes Restart audio, with administrator confirmation only when clicked. The app itself continues to run normally. The action restarts Windows Audio only, refuses running dependent services and preserves mute/reduced-volume restrictions. Main-panel Refresh continues to rescan devices. The restart coordinator and cancellation paths were tested with injected services; an actual host service restart was not performed during this update.
+The ceiling applies to audio that the player decodes to PCM and that Windows routes through its audio effects chain. Compressed movie audio therefore works once the player decodes it. Encoded HDMI or S/PDIF passthrough, exclusive-mode streams and outputs where Windows bypasses effects follow the player's or the device's own level control. Digital dBFS readings describe the signal inside the processor; real loudness at the speakers also depends on the amplifier and the room.
 
-![Green palette — synthetic preview](assets/palette-green.png)
-![Cyan palette — synthetic preview](assets/palette-cyan.png)
+## Quality checks
 
-## New in 5.7.1
+Each release runs a native processing scenario suite (417 isolated scenarios for the fifteen-band release), controller and interface checks and a standalone installer check. The exact native module is confirmed as loaded by Windows Audio on the development host, and a silent zero-only playback probe confirms fresh processing telemetry after the audio reload. Detailed versioned verification is kept with the source.
 
-The waveform cursor is removed and its intensity slider sits underneath, using the same palette-aware gradient as other controls. Volume marks 100% before its extra preamp range; EQ tracks are thicker. Output level and Compression sensitivity share aligned titles, middle values and lower sliders. Soft/Balanced/NMS are hidden by default and can be enabled in Settings > Application > Show compression presets. Saved panel order, audio values and display intensity are preserved.
+---
 
-![Consolidated dashboard — synthetic preview](assets/dashboard-5.7.1.png)
+Private code: [le-sound-normalizer](https://github.com/logicencoder/le-sound-normalizer)
 
-## New in 5.7.2
-
-Compression percentage/ratio and Reduction share one compact row. EQ tracks are thicker by default; choose 4–16 px in Settings > Audio > EQ track thickness. The 100% Volume tick extends above and below the thumb at exactly 100%, making the extra preamp range easier to identify. Existing audio values and panel preferences are preserved.
-
-![Compact tuning row — synthetic preview](assets/dashboard-5.7.2.png)
-
-## New in 5.7.3
-
-Output level and Compression sensitivity sit directly beneath the LED meters by default. Settings > Layout lets you reorder the meter row, tuning row, spectrum, oscilloscope and EQ; choose expanded sections, swap the tuning sides and show optional compression presets. Main-panel disclosure arrows remember their state without disabling processing. Both simple and 15-band EQ can collapse.
-
-The dashboard uses the available window width. Additional height goes to an expanded visual panel while disclosure preserves control and font scale. Volume above 100% is preamp gain before the final limiter: 125% adds approximately 1.94 dB to a quiet signal, while Output level remains the ceiling.
-
-![Responsive dashboard — synthetic preview](assets/dashboard-5.7.3.png)
-![Layout settings — isolated fixture](assets/layout-5.7.3.png)
-
-
-## New in 5.7.4
-
-Larger frequency labels and EQ gain values are the default. Settings > Text size adjusts spectrum labels, equalizer labels and supporting text independently. Spectrum keeps room for its larger labels without overlap. Panel order, disclosure state and audio settings are retained.
-
-Preamp gain is visible in diagnostics and above 100% in the status line. At 125%, the boost is approximately 1.94 dB before compression and the limiter; Output level remains the ceiling.
-
-![Readable labels — synthetic preview](assets/readability-5.7.4.png)
-
-
-## New in 5.7.5
-
-The engine and live audio details now share one bottom row. The top DSP line is removed. Adjusting EQ keeps runtime text steady instead of briefly showing settings-sent messages; important errors remain visible and parameter details are still recorded in Logs.
-
-![Consolidated footer — isolated preview](assets/footer-5.7.5.png)
-
-
-## New in 5.8.0
-
-Collapsing a panel leaves free space and keeps the other panels at their existing sizes. A short, thicker line at the bottom of each expanded panel lets you adjust its height. Heights are remembered, with separate simple/graphic EQ sizes. Dragging stops at the available space; no scrollbars or panels outside the window. Double-click a grip or press Home to reset that panel.
-
-
-Version 5.8.2 redistributes panel heights to fill the window after resizing and collapsing. Compact meters retain LED bars and scales. Height handles can be selected in Settings, with spectrum, waveform and EQ enabled by default. Display-only waveform centering and fixed-channel mode reduce DC/channel-switch drift. Spectrum labels remain present on two rows. This supersedes 5.8.0's blank-space/no-room layout policy. Automatic EQ, automatic compression tuning and extended gain controls are not included in this update.
-
-
-Version 5.8.3 removes hover popups, keeps integer spectrum captions in one row and enlarges the output readout. Output level accepts -60 through +12 dBFS in both engines, with a zero marker. Positive values describe internal floating-point headroom and can overload downstream output; raising a ceiling does not automatically amplify quiet input. Settings and existing listening levels are preserved. Graph layout and waveform buffers are reused to reduce repeated drawing work. Automatic EQ and automatic sensitivity remain under development.
+Logic Encoder · [GitHub](https://github.com/logicencoder) · [Contact](https://logicencoder.com/contact/)
