@@ -52,7 +52,9 @@ A small **EQ ON/OFF** switch in the equalizer header bypasses equalization only.
 
 ## Presets and preferences
 
-Save and load your own sound presets; the EQ switch state travels with them. Preferences remember the window layout, panel order, panel heights, disclosure state, text size and colour palette, so the window opens the way it was left.
+Save and load your own sound presets: a preset keeps your tuning so a film night, a late-evening setting and a music setting are one selection away. The equalizer switch state travels with a preset, so a preset that bypasses the equalizer comes back that way.
+
+Preferences remember how the window looks and behaves: window layout, panel order, panel heights, which panels are expanded, text size and colour palette. The window opens the way it was left, and individual layout choices can be reset from Settings.
 
 ## Appearance and layout
 
