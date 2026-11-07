@@ -1,6 +1,6 @@
 # Le Sound Normalizer
 
-![Le Sound Normalizer dashboard with LED meters, tuning row, spectrum, waveform and equalizer](assets/panels-5.8.3.png)
+![Le Sound Normalizer dashboard with LED meters, tuning row, spectrum, waveform and equalizer](assets/le-sound-normalizer-panels-5-8-3.png)
 
 Le Sound Normalizer is a Windows audio tool that keeps loud scenes from overpowering quiet dialogue. Turn the volume up so speech is understandable and the next explosion would normally blast out; the normalizer holds the output under a ceiling you choose and evens out the gap between quiet and loud passages, so a film, a series or a game stays comfortable at one listening level. It runs as a small controller window next to a native audio component that sits in the Windows audio path, so it works with the player you already use. Built and maintained by Logic Encoder at [logicencoder.com](https://logicencoder.com).
 
@@ -39,7 +39,7 @@ Below the meters, three collapsible displays describe what the processor is doin
 
 Collapsing a panel leaves free space and keeps the other panels at their sizes. A short, thicker line at the bottom of each expanded panel adjusts its height; heights are remembered separately for the simple and graphic equalizer. When the window is resized, extra height is distributed to the expanded visual panels so the dashboard fills the window.
 
-![Panels with collapsible spectrum, waveform and equalizer](assets/panels-5.8.2.png)
+![Panels with collapsible spectrum, waveform and equalizer](assets/le-sound-normalizer-panels-5-8-2.png)
 
 ## Tone and equalizer
 
@@ -62,13 +62,13 @@ Preferences remember how the window looks and behaves: window layout, panel orde
 - **Layout:** Settings lets you reorder the meter row, tuning row, spectrum, oscilloscope and equalizer, choose which sections start expanded, swap the tuning sides and show optional compression readouts. The dashboard uses the full window width.
 - **Text size:** spectrum labels, equalizer labels and supporting text scale independently, with larger frequency labels and gain values as the default and room reserved so nothing overlaps.
 
-![Layout settings with panel order and expansion options](assets/layout-5.7.3.png)
+![Layout settings with panel order and expansion options](assets/le-sound-normalizer-layout-5-7-3.png)
 
 ## Recording inputs and listening
 
 A dedicated area lists the Windows recording inputs with live level meters. Listening to an input is explicit: choose Enable or Disable for each input, then Save; changes apply on save and the status line shows whether it was saved or applied. The speaker button mutes or unmutes the selected Windows output only when clicked, and the mute and reduced-volume protections of the application are preserved across settings changes.
 
-![Recording inputs with live levels and listening controls](images/usb-input-settings-preview.png)
+![Recording inputs with live levels and listening controls](images/le-sound-normalizer-usb-input-settings-preview.png)
 
 ## Audio engines
 
