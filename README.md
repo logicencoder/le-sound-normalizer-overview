@@ -1,6 +1,6 @@
 # Le Sound Normalizer
 
-![Le Sound Normalizer dashboard with LED meters, tuning row, spectrum, waveform and equalizer](assets/le-sound-normalizer-panels-5-8-3.png)
+![Le Sound Normalizer cyan theme with meters, spectrum, oscilloscope and equalizer](assets/le-sound-normalizer-cyan-theme-meters-spectrum-oscilloscope.png)
 
 Le Sound Normalizer is a Windows audio tool that keeps loud scenes from overpowering quiet dialogue. Turn the volume up so speech is understandable and the next explosion would normally blast out; the normalizer holds the output under a ceiling you choose and evens out the gap between quiet and loud passages, so a film, a series or a game stays comfortable at one listening level. It runs as a small controller window next to a native audio component that sits in the Windows audio path, so it works with the player you already use. Built and maintained by Logic Encoder at [logicencoder.com](https://logicencoder.com).
 
@@ -27,6 +27,8 @@ The main window is built around one idea: set a ceiling, then choose how firmly 
 
 The two tuning controls, Output level and Compression sensitivity, sit directly under the LED meters by default and can be placed side by side or swapped left and right in the layout settings.
 
+![Le Sound Normalizer basic compact layout in the green theme](assets/le-sound-normalizer-basic-green-theme-compact-layout.png)
+
 ## Meters, spectrum and waveform
 
 The top of the window is a compact pair of green LED meters with scales and a connection status per output. When an output is muted, the meter keeps showing MUTED and its readings fall to the floor, so silence is never mistaken for a lost connection. Yellow and red warning levels keep their meaning in every colour palette.
@@ -50,6 +52,8 @@ Two equalizer views live in Settings under Audio and keep their own values:
 
 A small **EQ ON/OFF** switch in the equalizer header bypasses equalization only. Normalization and the output ceiling stay active, saved band values are kept, and the switch state is stored in preferences and in sound presets.
 
+![Le Sound Normalizer with compressor knobs and 15-band equalizer](assets/le-sound-normalizer-15-band-equalizer-compressor.png)
+
 ## Presets and preferences
 
 Save and load your own sound presets: a preset keeps your tuning so a film night, a late-evening setting and a music setting are one selection away. The equalizer switch state travels with a preset, so a preset that bypasses the equalizer comes back that way.
@@ -63,6 +67,8 @@ Preferences remember how the window looks and behaves: window layout, panel orde
 - **Text size:** spectrum labels, equalizer labels and supporting text scale independently, with larger frequency labels and gain values as the default and room reserved so nothing overlaps.
 
 ![Layout settings with panel order and expansion options](assets/le-sound-normalizer-layout-5-7-3.png)
+
+![Le Sound Normalizer dashboard with LED meters, tuning row, spectrum, waveform and equalizer](assets/le-sound-normalizer-panels-5-8-3.png)
 
 ## Recording inputs and listening
 
