@@ -1,6 +1,6 @@
 # Le Sound Normalizer
 
-![Le Sound Normalizer cyan theme with meters, spectrum, oscilloscope and equalizer](assets/le-sound-normalizer-cyan-theme-meters-spectrum-oscilloscope.png)
+![Le Sound Normalizer in the cyan theme with compressor knobs, meters, spectrum and 15-band equalizer](assets/le-sound-normalizer-15-band-equalizer-compressor.png)
 
 Le Sound Normalizer is a Windows audio tool that keeps loud scenes from overpowering quiet dialogue. Turn the volume up so speech is understandable and the next explosion would normally blast out; the normalizer holds the output under a ceiling you choose and evens out the gap between quiet and loud passages, so a film, a series or a game stays comfortable at one listening level. It runs as a small controller window next to a native audio component that sits in the Windows audio path, so it works with the player you already use. Built and maintained by Logic Encoder at [logicencoder.com](https://logicencoder.com).
 
@@ -41,8 +41,6 @@ Below the meters, three collapsible displays describe what the processor is doin
 
 Collapsing a panel leaves free space and keeps the other panels at their sizes. A short, thicker line at the bottom of each expanded panel adjusts its height; heights are remembered separately for the simple and graphic equalizer. When the window is resized, extra height is distributed to the expanded visual panels so the dashboard fills the window.
 
-![Panels with collapsible spectrum, waveform and equalizer](assets/le-sound-normalizer-panels-5-8-2.png)
-
 ## Tone and equalizer
 
 Two equalizer views live in Settings under Audio and keep their own values:
@@ -51,8 +49,6 @@ Two equalizer views live in Settings under Audio and keep their own values:
 - A **graphic equalizer** with up to fifteen vertical bands, each plus or minus 18 dB; switching views preserves the original frequency gains. Track thickness is adjustable from 4 to 16 px.
 
 A small **EQ ON/OFF** switch in the equalizer header bypasses equalization only. Normalization and the output ceiling stay active, saved band values are kept, and the switch state is stored in preferences and in sound presets.
-
-![Le Sound Normalizer with compressor knobs and 15-band equalizer](assets/le-sound-normalizer-15-band-equalizer-compressor.png)
 
 ## Presets and preferences
 
@@ -68,13 +64,9 @@ Preferences remember how the window looks and behaves: window layout, panel orde
 
 ![Layout settings with panel order and expansion options](assets/le-sound-normalizer-layout-5-7-3.png)
 
-![Le Sound Normalizer dashboard with LED meters, tuning row, spectrum, waveform and equalizer](assets/le-sound-normalizer-panels-5-8-3.png)
-
 ## Recording inputs and listening
 
 A dedicated area lists the Windows recording inputs with live level meters. Listening to an input is explicit: choose Enable or Disable for each input, then Save; changes apply on save and the status line shows whether it was saved or applied. The speaker button mutes or unmutes the selected Windows output only when clicked, and the mute and reduced-volume protections of the application are preserved across settings changes.
-
-![Recording inputs with live levels and listening controls](images/le-sound-normalizer-usb-input-settings-preview.png)
 
 ## Audio engines
 
